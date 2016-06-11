@@ -5,7 +5,7 @@
 using namespace std;
 int main() {
     try {
-        CFile<CElement> file("new.txt");
+        CFile<CElement> file("text.txt");
         CElement elemntToWrite(8);
         file.write(elemntToWrite);
         cout << file.read() << endl;

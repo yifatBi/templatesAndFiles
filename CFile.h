@@ -9,16 +9,10 @@ using namespace std;
 
 
 template<class T> class CFile {
-    fstream m_file;
     ofstream wrt;
     ifstream  rd;
 public:
     CFile(const char* path) {
-        m_file.open(path,fstream::in|fstream::out);
-        if (!m_file.is_open())
-        {
-            throw "COULDNT OPEN FILE";
-        }
         rd.open(path);
         if (!rd.is_open())
         {
@@ -34,9 +28,10 @@ public:
     T read(){
         T returnVal;
         //validate that the file is open and it's not the end of the file
-        if (m_file.is_open()&&!m_file.eof())
+        if (rd.good())
         {
-            m_file >> returnVal;
+//            returnVal=rd.get();
+            rd>>returnVal;
         }
         return returnVal;
     }
@@ -49,7 +44,7 @@ public:
             //check that there is val
             if (var == NULL)
             {
-                if (m_file.eof())
+                if (!rd.good())
                 {
                     isValid = false;
                 }
@@ -67,9 +62,7 @@ public:
     }
     //Write to the file the given T
     void write(T &t){
-            m_file << t;
-        wrt<<t;
-        m_file.close();
+        wrt<<(t);
     }
     void write(T *apBuf, int aNum){
         for (int i = 0; i < aNum; i++)
@@ -77,20 +70,26 @@ public:
     }
     //Thw size of the file according the numbers of T objects
     int size(){
+        //return the reader to the start and start read and count from the begining
+        rd.clear();
+        rd.seekg (0, ios::beg);
         int counter=0;
+        read();
         //validate that the file it's open and it's not the end of the file
-        if(!m_file.eof()&&m_file.is_open()) {
-            while (!m_file.eof()) {
-                read();
+        if(rd.good()&&rd.is_open()) {
+            while (rd.good()) {
                 counter++;
+                read();
             }
         }
         return counter;
     }
 
     virtual ~CFile() {
-        if(m_file.is_open())
-            m_file.close();
+        if(rd.is_open())
+            rd.close();
+        if(wrt.is_open())
+            wrt.close();
     }
 };
 
