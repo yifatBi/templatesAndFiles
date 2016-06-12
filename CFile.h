@@ -1,9 +1,9 @@
 //
 // Created by yifat biezuner on 11/06/2016.
 //
+using namespace std;
 #include <iostream>
 #include <fstream>
-using namespace std;
 #ifndef TEMPLATESPROJECT_CFILE_H
 #define TEMPLATESPROJECT_CFILE_H
 
@@ -16,12 +16,12 @@ public:
         rd.open(path);
         if (!rd.is_open())
         {
-            throw"COULDNT OPEN FILE";
+            throw "COULDNT OPEN FILE";
         }
         wrt.open(path);
         if (!wrt.is_open())
         {
-            throw"COULDNT OPEN FILE";
+            throw "COULDNT OPEN FILE";
         }
     }
     //read T from the file
@@ -30,7 +30,6 @@ public:
         //validate that the file is open and it's not the end of the file
         if (rd.good())
         {
-//            returnVal=rd.get();
             rd>>returnVal;
         }
         return returnVal;
@@ -42,11 +41,12 @@ public:
         {
             T var = read();
             //check that there is val
-            if (var == NULL)
+            if (var == var.DEFAULT_VAL)
             {
                 if (!rd.good())
                 {
                     isValid = false;
+                    return (i+1);
                 }
                 else
                 {
@@ -55,10 +55,10 @@ public:
             }
             else
             {
-                (*apBuf)[i] = var;
+                (apBuf[i]) = new T[1]{var};
             }
         }
-        delete apBuf;
+        return aNum;
     }
     //Write to the file the given T
     void write(T &t){
