@@ -37,7 +37,7 @@ public:
     int read(T **apBuf, int aNum){
         bool isValid= true;
         apBuf=new T*[aNum];
-        for (int i = 0; i<aNum&&isValid; i++)
+        for (int i = 0; i<aNum; i++)
         {
             T var = read();
             //check that there is val
@@ -45,7 +45,6 @@ public:
             {
                 if (!rd.good())
                 {
-                    isValid = false;
                     return (i+1);
                 }
                 else
