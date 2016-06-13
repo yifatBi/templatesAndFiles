@@ -1,5 +1,6 @@
 //
 // Created by yifat biezuner on 11/06/2016.
+// This class implement the function of generic functionality reading and writing to file
 //
 using namespace std;
 #include <iostream>
@@ -34,9 +35,11 @@ public:
         }
         return returnVal;
     }
+    //read from the file aNum-(number of T element) to the given list
+    //return- the number of elements written the the given list
     int read(T **apBuf, int aNum){
         bool isValid= true;
-        apBuf=new T*[aNum];
+        *apBuf=new T[aNum];
         for (int i = 0; i<aNum; i++)
         {
             T var = read();
@@ -45,7 +48,7 @@ public:
             {
                 if (!rd.good())
                 {
-                    return (i+1);
+                    return (i);
                 }
                 else
                 {
@@ -63,11 +66,12 @@ public:
     void write(T &t){
         wrt<<(t);
     }
+    //Write to the file aNum-(number of T) from the apBuf(list) to the file
     void write(T *apBuf, int aNum){
         for (int i = 0; i < aNum; i++)
             write(apBuf[i]);
     }
-    //Thw size of the file according the numbers of T objects
+    //The number of T elements in the file
     int size(){
         //return the reader to the start and start read and count from the begining
         rd.clear();

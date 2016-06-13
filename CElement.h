@@ -7,8 +7,10 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
-
-
+/**
+ * implementation of CELlement must override the ifsteam >> and ofstream << for being class for CFile
+ * also override the == operator for not exist element
+ */
 class CElement {
 private:
     int m_var;
